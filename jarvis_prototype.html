@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050b16">
+<title>J.A.R.V.I.S. — Prototype</title>
+<style>
+:root{color-scheme:dark;--cyan:#53dfff;--blue:#168dff;--muted:#8aa9c5}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 43%,#102b49 0%,#071323 37%,#03070e 75%);color:#e8f8ff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 28px) 22px calc(env(safe-area-inset-bottom) + 28px);overflow:hidden}
+header{text-align:center;letter-spacing:.28em;font-size:12px;color:#9edfff}
+header strong{display:block;font-size:22px;letter-spacing:.34em;color:#e9faff;margin-top:9px;text-shadow:0 0 18px #27baff}
+main{width:100%;display:flex;flex-direction:column;align-items:center;gap:32px}
+.core-wrap{width:min(72vw,290px);aspect-ratio:1;display:grid;place-items:center;position:relative;filter:drop-shadow(0 0 22px #087acb88)}
+.ring{position:absolute;inset:0;border:1px solid #43caff88;border-radius:50%;box-shadow:inset 0 0 25px #168dff22,0 0 22px #168dff22}
+.ring:before,.ring:after{content:"";position:absolute;border:1px solid #35bfff55;border-radius:50%}
+.ring:before{inset:13px;border-style:dashed;animation:spin 24s linear infinite}
+.ring:after{inset:30px;border-color:#4ee5ff99;box-shadow:0 0 22px #19baff55}
+.arc{position:absolute;inset:-7px;border-radius:50%;border:3px solid transparent;border-top-color:#55e5ff;border-right-color:#178dff;animation:spin 8s linear infinite}
+.core{width:48%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 32%,#d9ffff 0%,#60eaff 8%,#148edc 27%,#07508c 54%,#03182c 72%);box-shadow:0 0 18px #48ddff,0 0 55px #087bce, inset 0 0 20px #d7ffff88}
+@keyframes spin{to{transform:rotate(360deg)}}
+.status{text-align:center}
+#status{font-size:13px;letter-spacing:.35em;color:var(--cyan);text-shadow:0 0 14px #22bfff}
+#hint{font-size:12px;color:var(--muted);margin-top:10px}
+button{border:1px solid #55dfff;background:linear-gradient(180deg,#103b5d,#071b30);color:#eaffff;border-radius:999px;padding:17px 28px;min-width:180px;font-size:14px;letter-spacing:.18em;box-shadow:0 0 22px #078bca55;cursor:pointer}
+button:active{transform:scale(.97)}
+footer{font-size:10px;letter-spacing:.2em;color:#668ba8;text-align:center}
+.listening .core{animation:pulse 1.2s ease-in-out infinite alternate}
+@keyframes pulse{to{box-shadow:0 0 30px #9df7ff,0 0 85px #078bff}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
+</style>
+</head>
+<body>
+<header>PERSONAL AI SYSTEM<strong>J.A.R.V.I.S.</strong></header>
+<main>
+  <div class="core-wrap" id="coreWrap" aria-label="Animated blue JARVIS core">
+    <div class="ring"></div><div class="arc"></div><div class="core"></div>
+  </div>
+  <div class="status" aria-live="polite">
+    <div id="status">SYSTEM READY</div>
+    <div id="hint">Awaiting your command, sir.</div>
+  </div>
+  <button id="mic" type="button">ACTIVATE MICROPHONE</button>
+</main>
+<footer>PROTOTYPE 01 · INTERFACE ONLINE</footer>
+<script>
+const button=document.getElementById('mic');
+const status=document.getElementById('status');
+const hint=document.getElementById('hint');
+const core=document.getElementById('coreWrap');
+let listening=false;
+button.addEventListener('click',()=>{
+  listening=!listening;
+  core.classList.toggle('listening',listening);
+  status.textContent=listening?'LISTENING MODE':'SYSTEM READY';
+  hint.textContent=listening?'Microphone mode is simulated in this first prototype.':'Awaiting your command, sir.';
+  button.textContent=listening?'DEACTIVATE MICROPHONE':'ACTIVATE MICROPHONE';
+});
+</script>
+</body>
+</html>
